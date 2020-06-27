@@ -80,3 +80,22 @@ sudo rpm -i cuda-repo-rhel7-10.1.105-1.x86_64.rpm
 ```bash
 sudo yum install cuda -y
 ```
+* 4.) Export system path to Nvidia CUDA binary executables. Open the `~/.bashrc`using your preferred text editor and add the following two lines: 
+```bash
+sudo nano ~/.bashrc
+
+# Add this two lines:
+export PATH=/usr/local/cuda/bin:$PATH
+export LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH
+```
+
+* 5.) Re-login or read your updated ~/.bashrc file:
+```bash
+source ~/.bashrc
+```
+
+* 6.) Re-login or read your updated ~/.bashrc file:
+```bash
+nvcc --version
+nvidia-smi
+```
