@@ -22,3 +22,16 @@ sudo yum install kernel-devel epel-release
 sudo yum install dkms
 ```
 > Note: The **dkms** package is optional. However, this package will ensure continuous Nvidia kernel module compilation and installation in the event of new kernel update.
+* 4.) Disable **nouveau driver** by changing the configuration `/etc/default/grub` file. Add the **nouveau.modeset=0** into line starting with **GRUB_CMDLINE_LINUX**. Below you can find example of grub configuration file reflecting the previously suggested change
+```bash
+nano /etc/default/grub
+
+# Add nouveau.modeset=0 to the end of GRUB_CMDLINE_LINUX as shown in the example below
+GRUB_TIMEOUT=5                                                                                                                                      
+GRUB_DISTRIBUTOR="$(sed 's, release .*$,,g' /etc/system-release)"                                                                                   
+GRUB_DEFAULT=saved                                                                                                                                  
+GRUB_DISABLE_SUBMENU=true                                                                                                                           
+GRUB_TERMINAL_OUTPUT="console"                                                                                                                      
+GRUB_CMDLINE_LINUX="crashkernel=auto rhgb quiet nouveau.modeset=0"                                                                                  
+GRUB_DISABLE_RECOVERY="true"
+```
