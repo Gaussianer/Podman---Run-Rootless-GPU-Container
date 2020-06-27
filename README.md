@@ -4,7 +4,7 @@ With this repository we show you a way to use Podman to run a GPU container with
 First of all, we'll show you the prerequisites. Then we will show you from scratch how to install the prerequisites. 
 
 ## Prerequisites
-- CentOS
+- CentOS 7
 - CUDA supported NVIDIA GPU
 
 ## Installation
@@ -38,11 +38,20 @@ GRUB_DISABLE_RECOVERY="true"
 Execute the following command to apply the new GRUB configuration change:
 ```bash
 # BIOS:
-sudo grub2-mkconfig -o /boot/grub2/grub.cfg
+$ sudo grub2-mkconfig -o /boot/grub2/grub.cfg
 # EFI:
-sudo grub2-mkconfig -o /boot/efi/EFI/centos/grub.cfg
+$ sudo grub2-mkconfig -o /boot/efi/EFI/centos/grub.cfg
 ```
 * 5.) Reboot your  System.
 ```bash
 reboot
 ```
+* 6.) The Nvidia drivers must be installed while Xorg server is stopped. Switch to text mode by: 
+```bash
+systemctl isolate multi-user.target
+```
+* 7.) Install the Nvidia driver by executing the following command:
+```bash
+sudo bash NVIDIA-Linux-x86_64-*
+```
+> Hint: When prompted answer YES to installation of NVIDIA's 32-bit compatibility libraries and automatic update of your X configuration file.
