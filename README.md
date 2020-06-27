@@ -35,3 +35,10 @@ GRUB_TERMINAL_OUTPUT="console"
 GRUB_CMDLINE_LINUX="crashkernel=auto rhgb quiet nouveau.modeset=0"                                                                                  
 GRUB_DISABLE_RECOVERY="true"
 ```
+Execute the following command to apply the new GRUB configuration change:
+```bash
+# BIOS:
+$ sudo grub2-mkconfig -o /boot/grub2/grub.cfg
+# EFI:
+$ sudo grub2-mkconfig -o /boot/efi/EFI/centos/grub.cfg
+```
