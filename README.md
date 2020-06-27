@@ -61,7 +61,7 @@ sudo bash NVIDIA-Linux-x86_64-*
 reboot
 ```
 
-* 8.) Validate the installation and check if the correct driver is installed:
+* 9.) Validate the installation and check if the correct driver is installed:
 ```bash
 nvidia-smi
 ```
