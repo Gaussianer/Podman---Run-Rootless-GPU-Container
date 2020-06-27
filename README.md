@@ -67,7 +67,16 @@ nvidia-smi
 ```
 
 ### CUDA
-* 1.) The newest CUDA Drivers are located in the following repository. To install the CUDA 10.2 repository
+* 1.) Download the latest [Nvidia CUDA repository package](https://developer.download.nvidia.com/compute/cuda/repos/rhel7/x86_64/) cuda-repo-rhel7-*.rpm. For example use the wget command to download the latest CUDA package: 
 ```bash
-yum -y install http://developer.download.nvidia.com/compute/cuda/repos/rhel8/x86_64/cuda-repo-rhel8-10.2.89-1.x86_64.rpm
+wget https://developer.download.nvidia.com/compute/cuda/repos/rhel7/x86_64/cuda-repo-rhel7-10.0.130-1.x86_64.rpm
+```
+
+* 2.) Install the CUDA repository package. This will enable CUDA repository on your CentOS 7 Linux system: 
+```bash
+sudo rpm -i cuda-repo-rhel7-10.0.130-1.x86_64.rpm
+```
+* 3.) Install the entire CUDA toolkit and driver packages: 
+```bash
+sudo yum install cuda -y
 ```
