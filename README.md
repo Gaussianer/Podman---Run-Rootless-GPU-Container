@@ -9,7 +9,7 @@ First of all, we'll show you the prerequisites. Then we will show you from scrat
 
 ## Installation
 
-### NVIDIA Driver
+### NVIDIA Driver 
 * 1.) Identify your Nvidia graphic card model by executing: 
 ```bash
 lshw -numeric -C display
@@ -99,3 +99,14 @@ source ~/.bashrc
 nvcc --version
 nvidia-smi
 ```
+
+### Adding the nvidia-container-runtime-hook
+* 1.) Add the NVIDIA-Container-Runtime Repository
+```bash
+curl -s -L https://nvidia.github.io/nvidia-container-runtime/centos7/nvidia-container-runtime.repo | sudo tee /etc/yum.repos.d/nvidia-container-runtime.repo
+```
+* 2.) Install the NVIDIA-Container-Runtime
+```bash
+sudo yum -y install nvidia-container-runtime
+```
+
