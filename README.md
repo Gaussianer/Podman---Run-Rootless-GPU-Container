@@ -99,7 +99,11 @@ source ~/.bashrc
 nvcc --version
 nvidia-smi
 ```
-
+### Install Podman
+Podman will be needed later for execution and setup. Install Podman with the command:
+```bash
+yum -y install podman
+```
 ### Adding the nvidia-container-runtime-hook
 * 1.) Add the NVIDIA-Container-Runtime Repository
 ```bash
@@ -109,4 +113,22 @@ curl -s -L https://nvidia.github.io/nvidia-container-runtime/centos7/nvidia-cont
 ```bash
 sudo yum -y install nvidia-container-runtime
 ```
+* 3.)  Install libnvidia-container and the nvidia-container-runtime repositories
+```bash
+distribution=$(. /etc/os-release;echo $ID$VERSION_ID)
+curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.repo | tee /etc/yum.repos.d/nvidia-docker.repo
+```
+* 4.) The next step will install an OCI prestart hook. The prestart hook is responsible for making NVIDIA libraries and binaries available in a container (by bind-mounting them in from the host). Without the hook, users would have to include libraries and binaries into each and every container image that might use a GPU. Hooks minimize container size and simplify management of container images by ensuring only a single copy of libraries and binaries are required. The prestart hook is triggered by the presence of certain environment variables in the container: NVIDIA_DRIVER_CAPABILITIES=compute,utility.
+```bash
+yum -y install nvidia-container-toolkit
+```
 #### Adding the SELinux policy module
+NVIDIA provides a custom SELinux policy to make it easier to access GPUs from within containers, while still maintaining isolation. To run NVIDIA containers contained and not privileged, we have to install an SELinux policy tailored for running CUDA GPU workloads. The policy creates a new SELinux type (nvidia_container_t) with which the container will be running.
+
+Furthermore, we can drop all capabilities and prevent privilege escalation. See the invocation below to have a glimpse of how to start a NVIDIA container.
+
+* 1.) First install the SELinux policy modul:
+```bash
+# wget https://raw.githubusercontent.com/NVIDIA/dgx-selinux/master/bin/RHEL7/nvidia-container.pp
+# semodule -i nvidia-container.pp
+```
