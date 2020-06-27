@@ -42,3 +42,7 @@ $ sudo grub2-mkconfig -o /boot/grub2/grub.cfg
 # EFI:
 $ sudo grub2-mkconfig -o /boot/efi/EFI/centos/grub.cfg
 ```
+* 5.) Reboot your  System.
+```bash
+reboot
+```
