@@ -38,9 +38,9 @@ GRUB_DISABLE_RECOVERY="true"
 Execute the following command to apply the new GRUB configuration change:
 ```bash
 # BIOS:
-$ sudo grub2-mkconfig -o /boot/grub2/grub.cfg
+sudo grub2-mkconfig -o /boot/grub2/grub.cfg
 # EFI:
-$ sudo grub2-mkconfig -o /boot/efi/EFI/centos/grub.cfg
+sudo grub2-mkconfig -o /boot/efi/EFI/centos/grub.cfg
 ```
 * 5.) Reboot your  System.
 ```bash
