@@ -65,3 +65,9 @@ reboot
 ```bash
 nvidia-smi
 ```
+
+### CUDA
+* 1.) The newest CUDA Drivers are located in the following repository. To install the CUDA 10.2 repository
+```bash
+yum -y install http://developer.download.nvidia.com/compute/cuda/repos/rhel8/x86_64/cuda-repo-rhel8-10.2.89-1.x86_64.rpm
+```
