@@ -55,3 +55,13 @@ systemctl isolate multi-user.target
 sudo bash NVIDIA-Linux-x86_64-*
 ```
 > Hint: When prompted answer YES to installation of NVIDIA's 32-bit compatibility libraries and automatic update of your X configuration file.
+
+* 8.) After the installation is complete, reboot your system
+```bash
+reboot
+```
+
+* 8.) Validate the installation and check if the correct driver is installed:
+```bash
+nvidia-smi
+```
