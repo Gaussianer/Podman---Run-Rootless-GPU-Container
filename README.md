@@ -94,7 +94,7 @@ export LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH
 source ~/.bashrc
 ```
 
-* 6.) Re-login or read your updated ~/.bashrc file:
+* 6.) Confirm the correct CUDA installation: 
 ```bash
 nvcc --version
 nvidia-smi
