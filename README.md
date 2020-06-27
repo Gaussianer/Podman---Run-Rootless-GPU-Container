@@ -109,4 +109,4 @@ curl -s -L https://nvidia.github.io/nvidia-container-runtime/centos7/nvidia-cont
 ```bash
 sudo yum -y install nvidia-container-runtime
 ```
-
+#### Adding the SELinux policy module
