@@ -141,15 +141,35 @@ sudo nvidia-container-cli -k list | restorecon -v -f -
 ```bash
 sudo restorecon -Rv /dev
 ```
-#### Verify functionality of Podman GPU with root privileges
-Everything is now set up for running a GPU-enabled container on this host. However, so far this GPU container can only be executed with root privileges.
+#### Verify functionality of SELinux and prestart hook
+To verify that the drivers and container tools are configured correctly, try running a cuda-vector-add container. We can run the container with docker or podman.
 ```bash
 sudo podman run --user 1000:1000 --security-opt=no-new-privileges --cap-drop=ALL \
 --security-opt label=type:nvidia_container_t  \
 docker.io/mirrorgooglecontainers/cuda-vector-add:v0.1
 ```
-In order to run it without root privileges, follow these instructions.
+> If the test passes, the drivers, hooks and the container runtime are functioning correctly.
 
+#### Try it out with GPU accelerated PyTorch (with root privileges)
+* 1.) Download the python code into a directory
+```bash
+mkdir pytorch_mnist_ex && cd pytorch_mnist_ex
+wget https://raw.githubusercontent.com/pytorch/examples/master/mnist/main.py
+```
+> As it is written, this example will try to find GPUs and if it does not, it will run on CPU. We want to make sure that it fails with a useful error if it cannot access a GPU, so we make the following modification to the file with sed:
+In order to run it without root privileges, follow these instructions.
+```bash
+sed -i '98 s/("cuda.*$/("cuda")/' main.py
+```
+
+* 2.) Run the training
+```bash
+sudo podman run --rm --net=host -v $(pwd):/workspace:Z \
+--security-opt=no-new-privileges \
+--cap-drop=ALL --security-opt label=type:nvidia_container_t \
+docker.io/pytorch/pytorch:latest \
+python3 main.py --epochs=3
+```
 #### Running rootless Podman GPU Container
 You can run containers rootless with podman. To use GPUs in rootless containers you need to modify /etc/nvidia-container-runtime/config.toml and change these values:
 ```bash
