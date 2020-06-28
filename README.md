@@ -151,7 +151,7 @@ docker.io/mirrorgooglecontainers/cuda-vector-add:v0.1
 ```
 In order to run it without root privileges, follow these instructions.
 
-#### Running Podman GPU Container rootless
+#### Running rootless Podman GPU Container
 You can run containers rootless with podman. To use GPUs in rootless containers you need to modify /etc/nvidia-container-runtime/config.toml and change these values:
 ```bash
 sudo nano  /etc/nvidia-container-runtime/config.toml
