@@ -142,10 +142,11 @@ nvidia-container-cli -k list | restorecon -v -f -
 ```bash
 restorecon -Rv /dev
 ```
-* 3.) Verify functionality 
+#### Verify functionality of Podman GPU with root privileges
+Everything is now set up for running a GPU-enabled container on this host. However, so far this GPU container can only be executed with root privileges.
 ```bash
 podman run --user 1000:1000 --security-opt=no-new-privileges --cap-drop=ALL \
 --security-opt label=type:nvidia_container_t  \
 docker.io/mirrorgooglecontainers/cuda-vector-add:v0.1
 ```
-> Everything is now set up for running a GPU-enabled container on this host. However, so far this GPU container can only be executed with root privileges. In order to run it without root privileges, follow these instructions.
+In order to run it without root privileges, follow these instructions.
