@@ -129,6 +129,23 @@ Furthermore, we can drop all capabilities and prevent privilege escalation. See 
 
 * 1.) First install the SELinux policy modul:
 ```bash
-# wget https://raw.githubusercontent.com/NVIDIA/dgx-selinux/master/bin/RHEL7/nvidia-container.pp
-# semodule -i nvidia-container.pp
+wget https://raw.githubusercontent.com/NVIDIA/dgx-selinux/master/bin/RHEL7/nvidia-container.pp
+semodule -i nvidia-container.pp
 ```
+#### Check and restore the labels
+The SELinux policy heavily relies on the correct labeling of the host. Therefore we have to make sure that the files that are needed have the correct SELinux label.
+* 1.) Restorecon all files that the prestart hook will need:
+```bash
+nvidia-container-cli -k list | restorecon -v -f -
+```
+* 2.) Restorecon all accessed devices:
+```bash
+restorecon -Rv /dev
+```
+* 3.) Verify functionality 
+```bash
+podman run --user 1000:1000 --security-opt=no-new-privileges --cap-drop=ALL \
+--security-opt label=type:nvidia_container_t  \
+docker.io/mirrorgooglecontainers/cuda-vector-add:v0.1
+```
+> Everything is now set up for running a GPU-enabled container on this host. However, so far this GPU container can only be executed with root privileges. In order to run it without root privileges, follow these instructions.
