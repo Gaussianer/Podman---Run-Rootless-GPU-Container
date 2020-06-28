@@ -202,10 +202,6 @@ sudo rm -rf ~/.{config,local/share}/containers /run/user/$(id -u)/{libpod,runc,v
 
 3.) Start a GPU Container rootless. As a non-root user the system hooks are not used by default, so you need to set the --hooks-dir option in the podman run command. The following should allow you to run nvidia-smi in a rootless podman container:
 ```bash
-
-podman run --rm -it --security-opt=label=disable
---hooks-dir=/usr/share/containers/oci/hooks.d
-docker.io/gaussianer/fasterseg:1
-...
+podman run --rm -it --security-opt=label=disable --hooks-dir=/usr/share/containers/oci/hooks.d docker.io/gaussianer/fasterseg:1
 ```
 > We use the FasterSeg container, which we have already uploaded to DockerHub. FasterSeg and the environment we train on are also the reason why we want to run a GPU container without root privileges. 
