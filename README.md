@@ -101,7 +101,7 @@ nvidia-smi
 ### Install Podman
 Podman will be needed later for execution and setup. Install Podman with the command:
 ```bash
-yum -y install podman
+sudo yum -y install podman
 ```
 ### Adding the nvidia-container-runtime-hook
 * 1.) Add the NVIDIA-Container-Runtime Repository
