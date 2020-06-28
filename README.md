@@ -67,20 +67,19 @@ nvidia-smi
 ```
 
 ### CUDA
-* 1.) Download the latest [Nvidia CUDA repository package](https://developer.download.nvidia.com/compute/cuda/repos/rhel7/x86_64/) cuda-repo-rhel7-*.rpm. For example use the wget command to download the latest CUDA package: 
+* 1.) Install the kernel headers and development packages for the currently running kernel:
 ```bash
-wget https://developer.download.nvidia.com/compute/cuda/repos/rhel7/x86_64/cuda-repo-rhel7-10.1.105-1.x86_64.rpm
+sudo yum install kernel-devel-$(uname -r) kernel-headers-$(uname -r)
 ```
 
-* 2.) Install the CUDA repository package. This will enable CUDA repository on your CentOS 7 Linux system: 
+* 2.) Download the [NVIDIA CUDA Toolkit](https://developer.nvidia.com/cuda-10.2-download-archive?target_os=Linux&target_arch=x86_64&target_distro=CentOS&target_version=7&target_type=runfilelocal) and install CUDA: 
 ```bash
-sudo rpm -i cuda-repo-rhel7-10.1.105-1.x86_64.rpm 
+wget http://developer.download.nvidia.com/compute/cuda/10.2/Prod/local_installers/cuda_10.2.89_440.33.01_linux.run
+sudo sh cuda_10.2.89_440.33.01_linux.run
 ```
-* 3.) Install the entire CUDA toolkit and driver packages: 
-```bash
-sudo yum install cuda -y
-```
-* 4.) Export system path to Nvidia CUDA binary executables. Open the `~/.bashrc`using your preferred text editor and add the following two lines: 
+> Disable the driver option during installation because we have already installed the NVIDIA driver.
+
+* 3.) Export system path to NVIDIA CUDA binary executables. Open the `~/.bashrc`using your preferred text editor and add the following two lines: 
 ```bash
 sudo nano ~/.bashrc
 
