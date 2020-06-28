@@ -145,8 +145,29 @@ restorecon -Rv /dev
 #### Verify functionality of Podman GPU with root privileges
 Everything is now set up for running a GPU-enabled container on this host. However, so far this GPU container can only be executed with root privileges.
 ```bash
-podman run --user 1000:1000 --security-opt=no-new-privileges --cap-drop=ALL \
+sudo podman run --user 1000:1000 --security-opt=no-new-privileges --cap-drop=ALL \
 --security-opt label=type:nvidia_container_t  \
 docker.io/mirrorgooglecontainers/cuda-vector-add:v0.1
 ```
 In order to run it without root privileges, follow these instructions.
+
+#### Running Podman GPU Container rootless
+You can run containers rootless with podman. To use GPUs in rootless containers you need to modify /etc/nvidia-container-runtime/config.toml and change these values:
+```bash
+sudo nano  /etc/nvidia-container-runtime/config.toml
+
+# Add "no-cgroups = true"
+...
+[nvidia-container-cli]
+...
+#no-cgroups = false
+no-cgroups = true
+...
+
+# Add "debug = "~/.local/nvidia-container-runtime.log""
+...
+[nvidia-container-runtime]
+#debug = "/var/log/nvidia-container-runtime.log"
+debug = "~/.local/nvidia-container-runtime.log"
+...
+```
