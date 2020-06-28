@@ -171,7 +171,7 @@ docker.io/pytorch/pytorch:latest \
 python3 main.py --epochs=3
 ```
 #### Running rootless Podman GPU Container
-You can run containers rootless with podman. To use GPUs in rootless containers you need to modify /etc/nvidia-container-runtime/config.toml and change these values:
+* 1.) You can run containers rootless with podman. To use GPUs in rootless containers you need to modify /etc/nvidia-container-runtime/config.toml and change these values:
 ```bash
 sudo nano  /etc/nvidia-container-runtime/config.toml
 
@@ -190,7 +190,17 @@ no-cgroups = true
 debug = "~/.local/nvidia-container-runtime.log"
 ...
 ```
-As a non-root user the system hooks are not used by default, so you need to set the --hooks-dir option in the podman run command. The following should allow you to run nvidia-smi in a rootless podman container:
+* 2.) Enable user namespaces. We have a temporary solution for this. If you are looking for a long-term solution, you will not find one for now. Execute the following command from the user who should execute the GPU container using Podman:
+```bash
+sudo bash -c 'echo 10000 > /proc/sys/user/max_user_namespaces'
+sudo bash -c "echo $(whoami):110000:65536 > /etc/subuid"
+sudo bash -c "echo $(whoami):110000:65536 > /etc/subgid"
+
+# And then if you encounter an errors related to lchown run the following:
+sudo rm -rf ~/.{config,local/share}/containers /run/user/$(id -u)/{libpod,runc,vfs-*}
+```
+
+3.) Start a GPU Container rootless. As a non-root user the system hooks are not used by default, so you need to set the --hooks-dir option in the podman run command. The following should allow you to run nvidia-smi in a rootless podman container:
 ```bash
 
 podman run --rm -it --security-opt=label=disable
