@@ -129,18 +129,18 @@ Furthermore, we can drop all capabilities and prevent privilege escalation. See 
 
 * 1.) First install the SELinux policy modul:
 ```bash
-wget https://raw.githubusercontent.com/NVIDIA/dgx-selinux/master/bin/RHEL7/nvidia-container.pp
-semodule -i nvidia-container.pp
+sudo wget https://raw.githubusercontent.com/NVIDIA/dgx-selinux/master/bin/RHEL7/nvidia-container.pp
+sudo semodule -i nvidia-container.pp
 ```
 #### Check and restore the labels
 The SELinux policy heavily relies on the correct labeling of the host. Therefore we have to make sure that the files that are needed have the correct SELinux label.
 * 1.) Restorecon all files that the prestart hook will need:
 ```bash
-nvidia-container-cli -k list | restorecon -v -f -
+sudo nvidia-container-cli -k list | restorecon -v -f -
 ```
 * 2.) Restorecon all accessed devices:
 ```bash
-restorecon -Rv /dev
+sudo restorecon -Rv /dev
 ```
 #### Verify functionality of Podman GPU with root privileges
 Everything is now set up for running a GPU-enabled container on this host. However, so far this GPU container can only be executed with root privileges.
